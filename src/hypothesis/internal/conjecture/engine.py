@@ -241,7 +241,7 @@ class ConjectureRunner(object):
         def draw_constant(data, n, distribution):
             return bytes_from_list([
                 self.random.randint(0, 255)
-            ] * n)
+            ]) * n
 
         options = [
             draw_new,
