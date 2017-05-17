@@ -22,20 +22,18 @@ You should generally assume that an API is internal unless you have specific
 information to the contrary.
 
 ------------------
-3.8.5 - 2017-05-16
+3.8.4 - 2017-05-17
 ------------------
 
-Hypothesis now imports ``sqlite3`` when a SQLite database is used, rather
-than at module load, improving compatibility with Python implementations
-compiled without SQLite support (such as BSD or Jython).
+This release bundles two bug fixes:
 
-------------------
-3.8.4 - 2017-05-16
-------------------
+* Hypothesis now imports ``sqlite3`` when a SQLite database is used, rather
+  than at module load, improving compatibility with Python implementations
+  compiled without SQLite support (such as BSD or Jython).
 
-This is a compatibility bugfix release.  ``sampled_from`` no longer raises
-a deprecation warning when sampling from an ``Enum``, as all enums have a
-reliable iteration order.
+* This is a compatibility bugfix release.  ``sampled_from`` no longer raises
+  a deprecation warning when sampling from an ``Enum``, as all enums have a
+  reliable iteration order.
 
 ------------------
 3.8.3 - 2017-05-09
