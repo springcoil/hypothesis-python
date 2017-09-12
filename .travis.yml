@@ -30,47 +30,47 @@ jobs:
   include:
     # Core tests that we want to run first.
     - stage: prechecks
-      script: make TASK=check-release-file
-    - script: make TASK=check-shellcheck
-    - script: make TASK=documentation
-    - script: make TASK=lint
-    - script: make TASK=check-rst
-    - script: make TASK=check-format
-    - script: make TASK=check-benchmark
-    - script: make TASK=check-requirements
-    - script: make TASK=check-coverage
+      script: make check-release-file
+    - script: make check-shellcheck
+    - script: make documentation
+    - script: make lint
+    - script: make check-rst
+    - script: make check-format
+    - script: make check-benchmark
+    - script: make check-requirements
+    - script: make check-coverage
 
 
     # Important checks that we want to run
     # on most builds, but skip if the prechecks
     # failed.
     - stage: main
-      script: make TASK=check-pypy
-    - script: make TASK=check-py27
-    - script: make TASK=check-py36
-    - script: make TASK=check-quality
+      script: make check-pypy
+    - script: make check-py27
+    - script: make check-py36
+    - script: make check-quality
 
     # Less important tests that will probably
     # pass whenever the above do but are still
     # worth testing.
     - stage: extra
-      script: make TASK=check-unicode
-    - script: make TASK=check-ancient-pip
-    - script: make TASK=check-py273
-    - script: make TASK=check-py27-typing
-    - script: make TASK=check-py34
-    - script: make TASK=check-py35
-    - script: make TASK=check-nose
-    - script: make TASK=check-pytest28
-    - script: make TASK=check-faker070
-    - script: make TASK=check-faker071
-    - script: make TASK=check-django18
-    - script: make TASK=check-django110
-    - script: make TASK=check-django111
+      script: make check-unicode
+    - script: make check-ancient-pip
+    - script: make check-py273
+    - script: make check-py27-typing
+    - script: make check-py34
+    - script: make check-py35
+    - script: make check-nose
+    - script: make check-pytest28
+    - script: make check-faker070
+    - script: make check-faker071
+    - script: make check-django18
+    - script: make check-django110
+    - script: make check-django111
 
     # Do the deploy (doesn't do anything if not on master).
     - stage: deploy
-      script: make TASK=deploy
+      script: make deploy
 
 notifications:
   email:
