@@ -30,15 +30,14 @@ jobs:
   include:
     # Core tests that we want to run first.
     - stage: prechecks
+    - script: make check-coverage
       script: make check-release-file
     - script: make check-shellcheck
     - script: make documentation
     - script: make lint
     - script: make check-rst
     - script: make check-format
-    - script: make check-benchmark
     - script: make check-requirements
-    - script: make check-coverage
 
 
     # Important checks that we want to run
@@ -54,6 +53,7 @@ jobs:
     # pass whenever the above do but are still
     # worth testing.
     - stage: extra
+    - script: make check-benchmark
       script: make check-unicode
     - script: make check-ancient-pip
     - script: make check-py273
