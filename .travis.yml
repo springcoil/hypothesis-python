@@ -26,45 +26,51 @@ env:
         - BUILD_RUNTIMES=$HOME/.runtimes
         - FORMAT_ALL=true
 
-    matrix:
-        # Core tests that we want to run first.
-        - TASK=check-release-file
-        - TASK=check-shellcheck
-        - TASK=documentation
-        - TASK=lint
-        - TASK=check-rst
-        - TASK=check-format
-        - TASK=check-benchmark
-        - TASK=check-coverage
-        - TASK=check-requirements
-        - TASK=check-pypy
-        - TASK=check-py27
-        - TASK=check-py36
-        - TASK=check-quality
+jobs:
+  include:
+    # Core tests that we want to run first.
+    - stage: prechecks
+      script: make TASK=check-release-file
+    - script: make TASK=check-shellcheck
+    - script: make TASK=documentation
+    - script: make TASK=lint
+    - script: make TASK=check-rst
+    - script: make TASK=check-format
+    - script: make TASK=check-benchmark
+    - script: make TASK=check-requirements
+    - script: make TASK=check-coverage
 
-        # Less important tests that will probably
-        # pass whenever the above do but are still
-        # worth testing.
-        - TASK=check-unicode
-        - TASK=check-ancient-pip
-        - TASK=check-py273
-        - TASK=check-py27-typing
-        - TASK=check-py34
-        - TASK=check-py35
-        - TASK=check-nose
-        - TASK=check-pytest28
-        - TASK=check-faker070
-        - TASK=check-faker071
-        - TASK=check-django18
-        - TASK=check-django110
-        - TASK=check-django111
-        - TASK=deploy
 
-script:
-    - make $TASK
+    # Important checks that we want to run
+    # on most builds, but skip if the prechecks
+    # failed.
+    - stage: main
+      script: make TASK=check-pypy
+    - script: make TASK=check-py27
+    - script: make TASK=check-py36
+    - script: make TASK=check-quality
 
-matrix:
-    fast_finish: true
+    # Less important tests that will probably
+    # pass whenever the above do but are still
+    # worth testing.
+    - stage: extra
+      script: make TASK=check-unicode
+    - script: make TASK=check-ancient-pip
+    - script: make TASK=check-py273
+    - script: make TASK=check-py27-typing
+    - script: make TASK=check-py34
+    - script: make TASK=check-py35
+    - script: make TASK=check-nose
+    - script: make TASK=check-pytest28
+    - script: make TASK=check-faker070
+    - script: make TASK=check-faker071
+    - script: make TASK=check-django18
+    - script: make TASK=check-django110
+    - script: make TASK=check-django111
+
+    # Do the deploy (doesn't do anything if not on master).
+    - stage: deploy
+      script: make TASK=deploy
 
 notifications:
   email:
