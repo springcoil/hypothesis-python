@@ -55,8 +55,8 @@ from hypothesis.searchstrategy.strategies import SearchStrategy
 from hypothesis.internal.conjecture.engine import ExitReason, \
     ConjectureRunner, uniform, sort_key
 
-
 running_under_pytest = False
+global_force_seed = None
 
 
 def new_random():
@@ -409,6 +409,8 @@ def get_random_for_wrapped_test(test, wrapped_test):
             wrapped_test._hypothesis_internal_use_seed)
     elif settings.derandomize:
         return Random(function_digest(test))
+    elif global_force_seed is not None:
+        return Random(global_force_seed)
     else:
         return new_random()
 
