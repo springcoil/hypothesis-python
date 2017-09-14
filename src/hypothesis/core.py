@@ -56,6 +56,9 @@ from hypothesis.internal.conjecture.engine import ExitReason, \
     ConjectureRunner, uniform, sort_key
 
 
+running_under_pytest = False
+
+
 def new_random():
     import random
     return random.Random(random.getrandbits(128))
