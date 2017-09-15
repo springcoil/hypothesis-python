@@ -29,15 +29,15 @@ from random import Random
 from collections import namedtuple
 
 import attr
-
-import hypothesis.strategies as st
 from coverage import CoverageData
 from coverage.files import canonical_filename
+from coverage.collector import Collector
+
+import hypothesis.strategies as st
 from hypothesis.errors import Flaky, Timeout, NoSuchExample, \
     Unsatisfiable, InvalidArgument, DeadlineExceeded, MultipleFailures, \
     FailedHealthCheck, UnsatisfiedAssumption, \
     HypothesisDeprecationWarning
-from coverage.collector import Collector
 from hypothesis.control import BuildContext
 from hypothesis._settings import settings as Settings
 from hypothesis._settings import Phase, Verbosity, HealthCheck, \
