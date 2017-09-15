@@ -563,6 +563,9 @@ class Arc(object):
 in_given = False
 
 
+FORCE_PURE_TRACER = os.getenv('HYPOTHESIS_FORCE_PURE_TRACER') == 'true'
+
+
 class StateForActualGivenExecution(object):
 
     def __init__(self, test_runner, search_strategy, test, settings, random):
@@ -615,7 +618,7 @@ class StateForActualGivenExecution(object):
 
             self.collector = Collector(
                 branch=True,
-                timid=False,
+                timid=FORCE_PURE_TRACER,
                 should_trace=hypothesis_should_trace,
                 check_include=hypothesis_check_include,
                 concurrency='thread',
