@@ -100,6 +100,11 @@ class ListStrategy(SearchStrategy):
 
     def do_validate(self):
         self.element_strategy.validate()
+        if self.is_empty:
+            raise InvalidArgument((
+                'Cannot create non-empty lists with elements drawn from '
+                'strategy %r because it has no values.') % (
+                self.element_strategy,))
 
     def calc_is_empty(self, recur):
         if self.min_size == 0:
@@ -108,12 +113,8 @@ class ListStrategy(SearchStrategy):
             return recur(self.element_strategy)
 
     def do_draw(self, data):
-        if self.is_empty:
-            raise InvalidArgument((
-                'Cannot create non-empty lists with elements drawn from '
-                'strategy %r because it has no values.') % (
-                self.element_strategy,))
-        elif self.element_strategy.is_empty:
+        if self.element_strategy.is_empty:
+            assert self.min_size == 0
             return []
 
         elements = cu.many(
@@ -152,6 +153,11 @@ class UniqueListStrategy(SearchStrategy):
 
     def do_validate(self):
         self.element_strategy.validate()
+        if self.is_empty:
+            raise InvalidArgument((
+                'Cannot create non-empty lists with elements drawn from '
+                'strategy %r because it has no values.') % (
+                self.element_strategy,))
 
     Parameter = namedtuple(
         'Parameter', ('parameter_seed', 'parameter')
@@ -164,12 +170,8 @@ class UniqueListStrategy(SearchStrategy):
             return recur(self.element_strategy)
 
     def do_draw(self, data):
-        if self.is_empty:
-            raise InvalidArgument((
-                'Cannot create non-empty lists with elements drawn from '
-                'strategy %r because it has no values.') % (
-                    self.element_strategy,))
-        elif self.element_strategy.is_empty:
+        if self.element_strategy.is_empty:
+            assert self.min_size == 0
             return []
 
         elements = cu.many(
